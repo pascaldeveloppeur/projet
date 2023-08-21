@@ -1,0 +1,1 @@
+INSERT INTO user (id, name, email, gender, phone) VALUES (100, 'Pascal', 'Pascal','Male', '8524781');
