@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.dev.model.Member;
+import org.dev.model.MemberException;
 import org.dev.model.MemberType;
 import org.dev.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,59 +20,66 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/member")
+@Slf4j
 public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
 	
 	@GetMapping("/members/{id}")
-	public ResponseEntity<Member> getMember(@PathVariable("id") Long id) {
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<?> getMember(@PathVariable("id") Long id) {
 		
-		Optional<Member> member = memberService.getMemberById(id);
+		log.debug("Call of get member by id : {}", id);
 		
-		if(member.isPresent()) {
-			return new ResponseEntity<>(member.get(), HttpStatus.OK);
-		}else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		try {
+			log.trace("Found : {}", "");
+			Optional<Member> member = memberService.getMemberById(id);
+			return  ResponseEntity.status(HttpStatus.OK).body(member);
+		} catch (MemberException e) {
+			log.debug(e.getMessage());
+			return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
 		}
 		
 	}
-
+	
 	@GetMapping("/members")
-	public ResponseEntity<List<Member>> getAllMembersByType(@RequestParam(required = false) MemberType type){
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<?> getAllMembers(){
+		
+        log.debug("Call of get member by memberType : {}");
+		
 		try {
-			List<Member> members = new ArrayList<Member>();
-			
-			if(type == null)
-			{
-				memberService.getAllMembers().forEach(members::add);
-			}
-			else {
-				memberService.gerAllMembersByType(type).forEach(members::add);
-			}
-			
-			if(members.isEmpty())
-			{
-				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-			}
-			return new ResponseEntity<>(members, HttpStatus.OK);
-		}catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			log.trace("Found : {}", "");
+			List<Member> members = memberService.getAllMembers();
+			return  ResponseEntity.status(HttpStatus.OK).body(members);
+		} catch (MemberException e) {
+			log.debug(e.getMessage());
+			return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
 		}
+
 	}
 	
 	@PostMapping("/create")
-	public ResponseEntity<Member> createMember(@RequestBody Member member) {
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseEntity<?> createMember(@RequestBody Member member) {
+		
+		  log.debug("Call of create member : {}", member);
 		
 		try {
+			log.trace("Save : {}", "");
 			Member _member = memberService.saveMember(member);
-			return new ResponseEntity<>(_member, HttpStatus.CREATED);
-		}catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return  ResponseEntity.status(HttpStatus.OK).body(_member);
+		} catch (MemberException e) {
+			log.debug(e.getMessage());
+			return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
 		}
 		
 	}
@@ -95,22 +104,26 @@ public class MemberController {
 	}
 	
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<HttpStatus> deleteMemberById(@PathVariable("id") Long id) {
+	public ResponseEntity<?> deleteMemberById(@PathVariable("id") Long id) {
 		
-		try {
-			memberService.deleteMember(id);
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		}catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		
+		  log.debug("Call of delete member : {}", id);
+			
+			try {
+				
+				memberService.deleteMember(id);
+				return  ResponseEntity.status(HttpStatus.OK).body(true);
+			} catch (MemberException e) {
+				log.debug(e.getMessage());
+				return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
+			}
 	}
 	
-	@DeleteMapping("/delete")
-	public ResponseEntity<HttpStatus> deleteMembers() {
+	@DeleteMapping("/delete-all")
+	public ResponseEntity<?> deleteMembers() {
+		 log.debug("Call of delete all ");
 		try {
 			memberService.deleteMembers();
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			return  ResponseEntity.status(HttpStatus.OK).body(true);
 		}catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}

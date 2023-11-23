@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
 public interface MemberRepo extends JpaRepository<Member, Long> {
 	
 	
-	List<Member> findByType(MemberType memberType);
+	List<Member> findByMemberType(MemberType memberType);
 
 }
