@@ -1,8 +1,8 @@
-CREATE TABLE MEMBER (
+CREATE TABLE IF NOT EXISTS MEMBER (
     id BIGINT not null,
     first_name VARCHAR(50),
     last_name VARCHAR(50),
-    username VARCHAR(50),
+    user_name VARCHAR(50),
     email VARCHAR(50),
     password VARCHAR(50),
     member_type VARCHAR(10),
