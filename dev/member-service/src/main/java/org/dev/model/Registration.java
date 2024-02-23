@@ -34,8 +34,8 @@ public class Registration implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
-	@SequenceGenerator(name = "user_seq", sequenceName = "user_seq", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "registration_seq")
+	@SequenceGenerator(name = "registration_seq", sequenceName = "registration_seq", initialValue = 1, allocationSize = 1)
 	private Long id;
 	
 	@NotNull
