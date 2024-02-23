@@ -44,17 +44,17 @@ public class MemberService {
 		return memberlist ;
 	}
 	
-	public List<Member> getAllMembersByType(MemberType type){
-		
-		log.trace("try to find members by memberType");
-		if(type.name().isEmpty()) {
-			log.trace("this member does not exist");
-			return null;
-		}
-		List<Member> lisMember= memberRepository.findAllMemberBymemberType(type);
-		
-		return lisMember ;
-	}
+//	public List<Member> getAllMembersByUserName(String userName){
+//		
+//		log.trace("try to find members by memberType");
+//		if(type.name().isEmpty()) {
+//			log.trace("this member does not exist");
+//			return null;
+//		}
+//		List<Member> lisMember= memberRepository.findAllMemberBymemberType(type);
+//		
+//		return lisMember ;
+//	}
 	
 	public Member saveMember(Member member) {
 		

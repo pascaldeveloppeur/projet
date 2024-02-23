@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 public interface MemberRepo extends JpaRepository<Member, Long> {
 	
 	
-	List<Member> findAllMemberByMemberType(MemberType memberType);
+	//List<Member> findAllMemberBymemberType(MemberType memberType);
 	Member findByusername(String username);
 
 }
