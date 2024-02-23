@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS REGISTRATION (
     id BIGINT not null,
     registration_date DATE,
-    amount INTEGER),
+    amount INTEGER,
     member_type VARCHAR(10),
     PRIMARY KEY (id)
 
