@@ -67,7 +67,7 @@ public class RegistrationService {
 			log.trace("vous êtes déjà inscrit");
 			return registation1.get();
 		}else {
-			registration.setMember(memberRepo.findByUserName(registration.getUserName()));
+			registration.setMember(memberRepo.findByusername(registration.getUserName()));
 			
 			return registrationRepo.save(registration);
 		}

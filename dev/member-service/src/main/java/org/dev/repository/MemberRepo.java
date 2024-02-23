@@ -13,6 +13,6 @@ public interface MemberRepo extends JpaRepository<Member, Long> {
 	
 	
 	List<Member> findAllMemberByMemberType(MemberType memberType);
-	Member findByUserName(String name);
+	Member findByusername(String username);
 
 }

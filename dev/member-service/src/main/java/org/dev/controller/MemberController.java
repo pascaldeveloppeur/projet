@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 	
 	@Autowired
-	private MemberService memberService;
+	 MemberService memberService;
 	
 	@GetMapping("/members/{id}")
 	@ResponseStatus(HttpStatus.OK)

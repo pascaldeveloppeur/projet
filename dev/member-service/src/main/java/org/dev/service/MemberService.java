@@ -1,7 +1,6 @@
 package org.dev.service;
 
 
-import java.lang.foreign.Linker.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,10 +21,10 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberService {
 	
 	@Autowired
-	private MemberRepo memberRepo;
+	 MemberRepo memberRepository;
 	
 	public Optional<Member> getMemberById(Long id) {
-		Optional<Member> member = memberRepo.findById(id);
+		Optional<Member> member = memberRepository.findById(id);
 		if(!member.isPresent()) {
 			log.trace("this member does not exist");
 			return null;
@@ -36,7 +35,7 @@ public class MemberService {
 	public List<Member> getAllMembers(){
 		
 		log.trace("try  to find all members");
-		List<Member> memberlist=  memberRepo.findAll();
+		List<Member> memberlist=  memberRepository.findAll();
 		if(memberlist.isEmpty()) {
 			log.trace("this list is empty");
 			return null;
@@ -52,7 +51,7 @@ public class MemberService {
 			log.trace("this member does not exist");
 			return null;
 		}
-		List<Member> lisMember= memberRepo.findAllMemberByMemberType(type);
+		List<Member> lisMember= memberRepository.findAllMemberByMemberType(type);
 		
 		return lisMember ;
 	}
@@ -65,7 +64,7 @@ public class MemberService {
 		if(item.isPresent()) {
 			log.trace("this member already exist");
 		}
-		Member member1 = memberRepo.save(member);
+		Member member1 = memberRepository.save(member);
 		return member1;
 	}
 	
@@ -78,12 +77,12 @@ public class MemberService {
 			log.trace("object is not present ");
 			
 		}
-		memberRepo.deleteById(id);
+		memberRepository.deleteById(id);
 		
 	}
 	public void deleteMembers() {
 		log.trace("try to delete all member ");
-		memberRepo.deleteAll();
+		memberRepository.deleteAll();
 	}
 
 }
