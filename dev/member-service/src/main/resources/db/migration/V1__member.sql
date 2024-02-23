@@ -5,7 +5,6 @@ CREATE TABLE IF NOT EXISTS MEMBER (
     user_name VARCHAR(50),
     email VARCHAR(50),
     password VARCHAR(50),
-    member_type VARCHAR(10),
     PRIMARY KEY (id)
 
 );

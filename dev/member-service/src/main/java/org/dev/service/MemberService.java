@@ -52,7 +52,7 @@ public class MemberService {
 			log.trace("this member does not exist");
 			return null;
 		}
-		List<Member> lisMember= memberRepo.findByMemberType(type);
+		List<Member> lisMember= memberRepo.findAllMemberByMemberType(type);
 		
 		return lisMember ;
 	}

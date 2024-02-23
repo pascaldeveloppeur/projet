@@ -1,5 +1,8 @@
 package org.dev.model;
 
+import java.io.Serializable;
+import java.util.Date;
+
 //import javax.persistence.Column;
 //import javax.persistence.Entity;
 //import javax.persistence.GeneratedValue;
@@ -20,6 +23,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -33,8 +38,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Member {
+public class Member implements Serializable {
 	
+	/**
+	 * @author Pascal Dev
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
 	@SequenceGenerator(name = "user_seq", sequenceName = "user_seq", initialValue = 1, allocationSize = 1)
@@ -56,12 +66,22 @@ public class Member {
 	@Column(name = "email")
 	private String email;
 	
+	@NotNull
+	@Column(name = "gender")
+	private Gender gender;
+	
+	@NotNull
+	@Column(name = "naissance_date")
+	@Temporal(TemporalType.DATE)
+	private Date date;
+	
+	@NotNull
 	@Column(name = "password")
 	private String password;
-	
-	@Enumerated(EnumType.STRING)
-	@Column(name = "member_type")
-	private MemberType memberType;
+//	
+//	@Enumerated(EnumType.STRING)
+//	@Column(name = "member_type")
+//	private MemberType memberType;
 	
 	
 	

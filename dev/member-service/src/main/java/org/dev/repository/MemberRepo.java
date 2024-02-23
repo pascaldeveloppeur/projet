@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface MemberRepo extends JpaRepository<Member, Long> {
 	
 	
-	List<Member> findByMemberType(MemberType memberType);
+	List<Member> findAllMemberByMemberType(MemberType memberType);
+	Member findByUserName(String name);
 
 }

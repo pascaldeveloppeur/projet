@@ -93,8 +93,6 @@ public class MemberController {
 			_member.setLastName(member.getLastName());
 			_member.setUsername(member.getUsername());
 			_member.setEmail(member.getEmail());
-			_member.setPassword(member.getPassword());
-			_member.setMemberType(member.getMemberType());
 			return new ResponseEntity<>(memberService.saveMember(_member), HttpStatus.OK);
 		}else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
