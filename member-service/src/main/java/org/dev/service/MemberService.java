@@ -1,6 +1,7 @@
 package org.dev.service;
 
-import java.util.ArrayList;
+
+import java.lang.foreign.Linker.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,10 +9,7 @@ import org.dev.model.Member;
 import org.dev.model.MemberType;
 import org.dev.repository.MemberRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,7 +26,7 @@ public class MemberService {
 	
 	public Optional<Member> getMemberById(Long id) {
 		Optional<Member> member = memberRepo.findById(id);
-		if(member.isEmpty()) {
+		if(!member.isPresent()) {
 			log.trace("this member does not exist");
 			return null;
 		}
@@ -38,8 +36,13 @@ public class MemberService {
 	public List<Member> getAllMembers(){
 		
 		log.trace("try  to find all members");
-		List<Member> list=  memberRepo.findAll();
-		return list ;
+		List<Member> memberlist=  memberRepo.findAll();
+		if(memberlist.isEmpty()) {
+			log.trace("this list is empty");
+			return null;
+		}
+		
+		return memberlist ;
 	}
 	
 	public List<Member> getAllMembersByType(MemberType type){
@@ -57,17 +60,29 @@ public class MemberService {
 	public Member saveMember(Member member) {
 		
 		log.trace("try to save member");
+		Optional<Member> item = getMemberById(member.getId());
+		
+		if(item.isPresent()) {
+			log.trace("this member already exist");
+		}
 		Member member1 = memberRepo.save(member);
 		return member1;
 	}
 	
 	public void deleteMember(Long id) {
 		log.trace("try to delete member by id");
+		log.trace("try to save member");
+		Optional<Member> item = getMemberById(id);
+		
+		if(!item.isPresent()) {
+			log.trace("object is not present ");
+			
+		}
 		memberRepo.deleteById(id);
 		
 	}
 	public void deleteMembers() {
-		log.trace("try to delete all member by id");
+		log.trace("try to delete all member ");
 		memberRepo.deleteAll();
 	}
 
