@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MemberController {
 	
-	@Autowired
+	  @Autowired
 	 MemberService memberService;
 	
 	@GetMapping("/members/{id}")

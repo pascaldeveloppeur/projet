@@ -51,7 +51,7 @@ public class MemberService {
 			log.trace("this member does not exist");
 			return null;
 		}
-		List<Member> lisMember= memberRepository.findAllMemberByMemberType(type);
+		List<Member> lisMember= memberRepository.findAllMemberBymemberType(type);
 		
 		return lisMember ;
 	}

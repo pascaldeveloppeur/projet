@@ -25,6 +25,7 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -78,10 +79,10 @@ public class Member implements Serializable {
 	@NotNull
 	@Column(name = "password")
 	private String password;
-//	
-//	@Enumerated(EnumType.STRING)
-//	@Column(name = "member_type")
-//	private MemberType memberType;
+	
+	
+	@Transient
+	private MemberType memberType;
 	
 	
 	
