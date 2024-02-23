@@ -50,7 +50,7 @@ public class Registration implements Serializable {
 	@Transient
 	String userName;
 	
-	@OneToOne(mappedBy = "member")
+	@OneToOne
 	Member member;
 	
 	@NotNull
