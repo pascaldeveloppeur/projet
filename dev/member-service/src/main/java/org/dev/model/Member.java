@@ -21,6 +21,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
@@ -32,6 +33,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * @author Pascal Dev
+ */
+
 @Entity
 @Table(name="member")
 @Data
@@ -40,9 +45,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Member implements Serializable {
 	
-	/**
-	 * @author Pascal Dev
-	 */
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -63,7 +66,7 @@ public class Member implements Serializable {
 	private String username;
 	
 	@Email(message = "Email should be valid")
-	@Column(name = "email")
+	@Column(name = "email", unique = true, nullable = false)
 	private String email;
 	
 	@NotNull
@@ -78,6 +81,9 @@ public class Member implements Serializable {
 	@NotNull
 	@Column(name = "password")
 	private String password;
+	
+	@OneToOne(mappedBy = "member")
+	private Registration registration;
 	
 //	@Enumerated(EnumType.STRING)
 //	@Column(name = "member_type")

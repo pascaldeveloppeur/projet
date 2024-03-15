@@ -8,6 +8,8 @@ import org.dev.model.Member;
 import org.dev.model.MemberType;
 import org.dev.repository.MemberRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +37,8 @@ public class MemberService {
 	public List<Member> getAllMembers(){
 		
 		log.trace("try  to find all members");
-		List<Member> memberlist=  memberRepository.findAll();
+		Page<Member> items=  memberRepository.findAll(PageRequest.of(0, 5));
+		List<Member> memberlist= items.getContent();
 		if(memberlist.isEmpty()) {
 			log.trace("this list is empty");
 			return null;
