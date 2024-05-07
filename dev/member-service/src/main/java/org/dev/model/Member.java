@@ -26,6 +26,7 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -54,32 +55,34 @@ public class Member implements Serializable {
 	private Long id;
 	
 	@NotNull(message = "FirstName cannot be null")
-	@Column(name = "first_name")
+	@Column(name = "first_name",length = 20)
 	private String firstName;
 	
 	@NotNull(message = "LastName cannot be null")
-	@Column(name = "last_name")
+	@Column(name = "last_name",length = 20)
 	private String lastName;
 	
 	@NotNull(message = "UserName cannot be null")
-	@Column(name = "user_name")
+	@Column(name = "user_name",length = 10)
 	private String username;
 	
 	@Email(message = "Email should be valid")
 	@Column(name = "email", unique = true, nullable = false)
 	private String email;
 	
+	@Transient
 	@NotNull
 	@Column(name = "gender")
 	private Gender gender;
 	
 	@NotNull
 	@Column(name = "naissance_date")
+	@Transient
 	@Temporal(TemporalType.DATE)
 	private Date date;
 	
 	@NotNull
-	@Column(name = "password")
+	@Column(name = "password",unique = true)
 	private String password;
 	
 	@OneToOne(mappedBy = "member")
